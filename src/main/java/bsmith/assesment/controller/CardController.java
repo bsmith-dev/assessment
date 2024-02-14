@@ -1,7 +1,7 @@
 package bsmith.assesment.controller;
 
 import bsmith.assesment.dto.GameResponseDto;
-import bsmith.assesment.model.Card;
+import bsmith.assesment.entity.Card;
 import bsmith.assesment.service.GameService;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;

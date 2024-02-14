@@ -1,8 +1,8 @@
 package bsmith.assesment.service;
 
 import bsmith.assesment.exception.GameException;
-import bsmith.assesment.model.Card;
-import bsmith.assesment.model.Deck;
+import bsmith.assesment.entity.Card;
+import bsmith.assesment.entity.Deck;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.AllArgsConstructor;

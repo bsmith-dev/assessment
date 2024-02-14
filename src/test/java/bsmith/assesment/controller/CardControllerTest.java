@@ -1,6 +1,6 @@
 package bsmith.assesment.controller;
 
-import bsmith.assesment.model.Card;
+import bsmith.assesment.entity.Card;
 import bsmith.assesment.service.GameService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;

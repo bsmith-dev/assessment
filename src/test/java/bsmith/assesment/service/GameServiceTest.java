@@ -6,8 +6,8 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import bsmith.assesment.model.Card;
-import bsmith.assesment.model.Deck;
+import bsmith.assesment.entity.Card;
+import bsmith.assesment.entity.Deck;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
