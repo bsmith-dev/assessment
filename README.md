@@ -3,3 +3,9 @@
 3 Prompt: analyze the following application requirements
 
 
+## API Documentation
+
+API documentation is available at:
+
+
+http://localhost:8080/swagger-ui/index.html

@@ -4,7 +4,11 @@ import bsmith.assesment.enums.Suit;
 import bsmith.assesment.enums.Value;
 import java.util.Collections;
 import java.util.LinkedList;
+import lombok.Getter;
+import org.springframework.stereotype.Component;
 
+@Component
+@Getter
 public class Deck {
 
     private final LinkedList<Card> cards = new LinkedList<>();

@@ -2,15 +2,21 @@ package bsmith.assesment.service;
 
 import bsmith.assesment.model.Card;
 import bsmith.assesment.model.Deck;
-import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Service;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 
 @Service
+@Slf4j
+@Getter
 @AllArgsConstructor
 public class CardService {
-    private  Map<String, Deck> games = new HashMap<>();
+
+    private Map<String, Deck> games = new HashMap<>();
 
     public Card deal(String gameId) {
         Deck deck = games.computeIfAbsent(gameId, k -> new Deck());
@@ -22,6 +28,8 @@ public class CardService {
         if (deck != null) {
             deck.returnCardToBottom(card);
         }
+
+
     }
 
     public void shuffle(String gameId) {
