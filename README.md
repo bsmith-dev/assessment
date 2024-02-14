@@ -9,3 +9,8 @@ API documentation is available at:
 
 
 http://localhost:8080/swagger-ui/index.html
+
+http://localhost:8080/h2-console
+sa
+password
+card-db
