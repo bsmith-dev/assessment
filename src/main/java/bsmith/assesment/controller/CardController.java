@@ -2,7 +2,7 @@ package bsmith.assesment.controller;
 
 import bsmith.assesment.dto.GameResponseDto;
 import bsmith.assesment.model.Card;
-import bsmith.assesment.service.CardService;
+import bsmith.assesment.service.GameService;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,11 +20,11 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 public class CardController {
 
-    private final CardService cardService;
+    private final GameService gameService;
 
     @PostMapping("/deal")
     public ResponseEntity<GameResponseDto> deal(@PathVariable @NotNull String gameId) {
-        Card card = cardService.deal(gameId);
+        Card card = gameService.deal(gameId);
         GameResponseDto response = GameResponseDto.builder()
                 .gameId(gameId)
                 .card(card.toString())
@@ -37,7 +37,7 @@ public class CardController {
     @PostMapping("/return")
     public ResponseEntity<GameResponseDto> returnCardToBottom(@PathVariable String gameId, @RequestBody Card card) {
 
-        cardService.returnCardToBottom(gameId, card);
+        gameService.returnCardToBottom(gameId, card);
         GameResponseDto response = GameResponseDto.builder()
                 .gameId(gameId)
                 .card(card.toString())
@@ -50,7 +50,7 @@ public class CardController {
 
     @PostMapping("/shuffle")
     public ResponseEntity<GameResponseDto> shuffle(@PathVariable String gameId) {
-        cardService.shuffle(gameId);
+        gameService.shuffle(gameId);
         GameResponseDto response = GameResponseDto.builder()
                 .gameId(gameId)
                 .message("Deck shuffled")

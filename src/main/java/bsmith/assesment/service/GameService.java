@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Getter
 @AllArgsConstructor
-public class CardService {
+public class GameService {
 
     private Map<String, Deck> games = new HashMap<>();
 

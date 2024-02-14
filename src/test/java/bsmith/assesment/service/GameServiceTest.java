@@ -13,15 +13,15 @@ import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class CardServiceTest {
+public class GameServiceTest {
 
-    private CardService cardService;
+    private GameService gameService;
     private Map<String, Deck> games;
 
     @BeforeEach
     public void setUp() {
         games = new HashMap<>();
-        cardService = new CardService(games);
+        gameService = new GameService(games);
     }
 
     @Test
@@ -33,7 +33,7 @@ public class CardServiceTest {
         Card mockCard = mock(Card.class);
         when(mockDeck.deal()).thenReturn(mockCard);
 
-        Card result = cardService.deal(gameId);
+        Card result = gameService.deal(gameId);
 
         assertEquals(mockCard, result);
         verify(mockDeck, times(1)).deal();
@@ -47,7 +47,7 @@ public class CardServiceTest {
 
         Card mockCard = mock(Card.class);
 
-        cardService.returnCardToBottom(gameId, mockCard);
+        gameService.returnCardToBottom(gameId, mockCard);
 
         verify(mockDeck, times(1)).returnCardToBottom(mockCard);
     }
@@ -58,7 +58,7 @@ public class CardServiceTest {
         Deck mockDeck = mock(Deck.class);
         games.put(gameId, mockDeck);
 
-        cardService.shuffle(gameId);
+        gameService.shuffle(gameId);
 
         verify(mockDeck, times(1)).shuffle();
     }
