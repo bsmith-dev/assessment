@@ -1,5 +1,6 @@
 package bsmith.assesment.dto;
 
+import bsmith.assesment.exception.ApiError;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,7 +13,9 @@ import lombok.NoArgsConstructor;
 public class GameResponseDto {
     private String gameId;
     private String card;
-    private String deck;
     private String message;
-
+    private ApiError error;
+    public GameResponseDto(ApiError apiError) {
+        this.error = apiError;
+    }
 }
