@@ -10,14 +10,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class GameResponseDto {
+public class GameResponse {
 
     private Long gameId;
     private String card;
     private String message;
     private ApiError error;
 
-    public GameResponseDto(ApiError apiError) {
+    public GameResponse(ApiError apiError) {
         this.error = apiError;
     }
 }

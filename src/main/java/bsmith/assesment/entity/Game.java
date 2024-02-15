@@ -11,6 +11,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import lombok.Data;
@@ -34,11 +35,9 @@ public class Game {
     }
 
     private void initialize() {
-        for (Suit suit : Suit.values()) {
-            for (Rank rank : Rank.values()) {
-                cards.add(new Card(suit, rank));
-            }
-        }
+        Arrays.stream(Suit.values())
+                .flatMap(suit -> Arrays.stream(Rank.values()).map(rank -> new Card(suit, rank)))
+                .forEach(cards::add);
     }
 
     public Card deal() {

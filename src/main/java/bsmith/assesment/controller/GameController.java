@@ -1,6 +1,6 @@
 package bsmith.assesment.controller;
 
-import bsmith.assesment.dto.GameResponseDto;
+import bsmith.assesment.dto.GameResponse;
 import bsmith.assesment.entity.Card;
 import bsmith.assesment.entity.Game;
 import bsmith.assesment.service.GameService;
@@ -24,9 +24,9 @@ public class GameController {
     private final GameService gameService;
 
     @PostMapping("/create")
-    public ResponseEntity<GameResponseDto> createGame() {
+    public ResponseEntity<GameResponse> createGame() {
         Game game = gameService.createGame();
-        GameResponseDto response = GameResponseDto.builder()
+        GameResponse response = GameResponse.builder()
                 .gameId(game.getId())
                 .message("Game created")
                 .build();
@@ -35,9 +35,9 @@ public class GameController {
     }
 
     @PostMapping("/deal")
-    public ResponseEntity<GameResponseDto> deal(@PathVariable @NotNull Long gameId) {
+    public ResponseEntity<GameResponse> deal(@PathVariable @NotNull Long gameId) {
         Card card = gameService.deal(gameId);
-        GameResponseDto response = GameResponseDto.builder()
+        GameResponse response = GameResponse.builder()
                 .gameId(gameId)
                 .card(card.toString())
                 .message("Card dealt")
@@ -47,11 +47,11 @@ public class GameController {
     }
 
     @PostMapping("/return")
-    public ResponseEntity<GameResponseDto> returnCardToBottom(@PathVariable @NotNull Long gameId,
+    public ResponseEntity<GameResponse> returnCardToBottom(@PathVariable @NotNull Long gameId,
             @RequestBody @NotNull Card card) {
 
         gameService.returnCardToBottom(gameId, card);
-        GameResponseDto response = GameResponseDto.builder()
+        GameResponse response = GameResponse.builder()
                 .gameId(gameId)
                 .card(card.toString())
                 .message("Card returned to bottom")
@@ -62,9 +62,9 @@ public class GameController {
     }
 
     @PostMapping("/shuffle")
-    public ResponseEntity<GameResponseDto> shuffle(@PathVariable @NotNull Long gameId) {
+    public ResponseEntity<GameResponse> shuffle(@PathVariable @NotNull Long gameId) {
         gameService.shuffle(gameId);
-        GameResponseDto response = GameResponseDto.builder()
+        GameResponse response = GameResponse.builder()
                 .gameId(gameId)
                 .message("Deck shuffled")
                 .build();

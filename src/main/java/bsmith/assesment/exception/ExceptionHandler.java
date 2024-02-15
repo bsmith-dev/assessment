@@ -1,6 +1,6 @@
 package bsmith.assesment.exception;
 
-import bsmith.assesment.dto.GameResponseDto;
+import bsmith.assesment.dto.GameResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -12,10 +12,10 @@ class ExceptionHandler {
     @ResponseBody
     @org.springframework.web.bind.annotation.ExceptionHandler(GameException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public GameResponseDto badRequestHandler(GameException ex) {
+    public GameResponse badRequestHandler(GameException ex) {
         String message = ex.getMessage();
         ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST.value(), message);
-        return new GameResponseDto(apiError);
+        return new GameResponse(apiError);
     }
 
 }

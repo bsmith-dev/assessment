@@ -47,7 +47,7 @@ Content-Type: application/json
 
 {
   "suit": "SPADES",
-  "rank": "JACK"
+  "rank": "THREE"
 }
 
 <> 2024-02-15T014424.200.json
