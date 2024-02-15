@@ -10,6 +10,7 @@ import static org.mockito.Mockito.when;
 
 import bsmith.assesment.dto.GameResponseDto;
 import bsmith.assesment.entity.Card;
+import bsmith.assesment.entity.Game;
 import bsmith.assesment.service.GameService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,6 +29,17 @@ public class GameControllerTest {
     public void setUp() {
         MockitoAnnotations.openMocks(this);
         gameController = new GameController(gameService);
+    }
+
+    @Test
+    public void testCreateGame() {
+        Game game = new Game();
+        when(gameService.createGame()).thenReturn(game);
+
+        ResponseEntity<GameResponseDto> response = gameController.createGame();
+
+        assertEquals(201, response.getStatusCodeValue());
+        verify(gameService, times(1)).createGame();
     }
 
     @Test

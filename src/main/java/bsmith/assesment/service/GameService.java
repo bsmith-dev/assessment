@@ -13,21 +13,24 @@ import org.springframework.stereotype.Service;
 @Service
 @Slf4j
 @RequiredArgsConstructor
+@Transactional
 public class GameService {
 
     private final GameRepository gameRepository;
     private final CardRepository cardRepository;
 
-    @Transactional
+    public Game createGame() {
+        return gameRepository.save(new Game());
+    }
+
     public Card deal(Long gameId) {
         log.info("Deal game id: {}", gameId);
-        Game game = gameRepository.findById(gameId).orElseGet(() -> {
-            Game newGame = new Game();
-            newGame.setId(gameId);
-            gameRepository.save(newGame);
-            return newGame;
-        });
-        return game.deal();
+        Game game = gameRepository.findById(gameId).orElseThrow(() -> new GameException(
+                "Game has not been started yet. Please create a game first."));
+
+        Card card = game.deal();
+        removeCardFromDeck(card.getId());
+        return card;
     }
 
     public void returnCardToBottom(Long gameId, Card card) {
@@ -51,4 +54,10 @@ public class GameService {
         game.shuffle();
         gameRepository.save(game);
     }
+
+    private void removeCardFromDeck(Long gameId) {
+        log.info("Remove card from deck game id: {}", gameId);
+        cardRepository.deleteById(gameId);
+    }
+
 }

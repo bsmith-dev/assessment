@@ -2,6 +2,7 @@ package bsmith.assesment.controller;
 
 import bsmith.assesment.dto.GameResponseDto;
 import bsmith.assesment.entity.Card;
+import bsmith.assesment.entity.Game;
 import bsmith.assesment.service.GameService;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -22,6 +23,17 @@ public class GameController {
 
     private final GameService gameService;
 
+    @PostMapping("/create")
+    public ResponseEntity<GameResponseDto> createGame() {
+        Game game = gameService.createGame();
+        GameResponseDto response = GameResponseDto.builder()
+                .gameId(game.getId())
+                .message("Game created")
+                .build();
+        log.info("Response for /create: {}", response);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+
     @PostMapping("/deal")
     public ResponseEntity<GameResponseDto> deal(@PathVariable @NotNull Long gameId) {
         Card card = gameService.deal(gameId);
@@ -35,8 +47,8 @@ public class GameController {
     }
 
     @PostMapping("/return")
-    public ResponseEntity<GameResponseDto> returnCardToBottom(@PathVariable Long gameId,
-            @RequestBody Card card) {
+    public ResponseEntity<GameResponseDto> returnCardToBottom(@PathVariable @NotNull Long gameId,
+            @RequestBody @NotNull Card card) {
 
         gameService.returnCardToBottom(gameId, card);
         GameResponseDto response = GameResponseDto.builder()
@@ -50,7 +62,7 @@ public class GameController {
     }
 
     @PostMapping("/shuffle")
-    public ResponseEntity<GameResponseDto> shuffle(@PathVariable Long gameId) {
+    public ResponseEntity<GameResponseDto> shuffle(@PathVariable @NotNull Long gameId) {
         gameService.shuffle(gameId);
         GameResponseDto response = GameResponseDto.builder()
                 .gameId(gameId)

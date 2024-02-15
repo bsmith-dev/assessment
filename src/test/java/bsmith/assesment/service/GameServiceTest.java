@@ -1,5 +1,6 @@
 package bsmith.assesment.service;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.any;
@@ -33,6 +34,17 @@ public class GameServiceTest {
     public void setUp() {
         MockitoAnnotations.openMocks(this);
         gameService = new GameService(gameRepository, cardRepository);
+    }
+
+    @Test
+    public void testCreateGame() {
+        Game game = new Game();
+        when(gameRepository.save(any(Game.class))).thenReturn(game);
+
+        Game result = gameService.createGame();
+
+        assertEquals(game, result);
+        verify(gameRepository, times(1)).save(any(Game.class));
     }
 
     @Test
