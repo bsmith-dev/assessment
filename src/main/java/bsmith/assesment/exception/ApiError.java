@@ -8,6 +8,7 @@ import lombok.Data;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Data
 public class ApiError {
+
     private Integer statusCode;
     private String message;
     private List<ValidationError> errors;

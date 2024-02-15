@@ -18,12 +18,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/games/{gameId}")
 @Slf4j
 @AllArgsConstructor
-public class CardController {
+public class GameController {
 
     private final GameService gameService;
 
     @PostMapping("/deal")
-    public ResponseEntity<GameResponseDto> deal(@PathVariable @NotNull String gameId) {
+    public ResponseEntity<GameResponseDto> deal(@PathVariable @NotNull Long gameId) {
         Card card = gameService.deal(gameId);
         GameResponseDto response = GameResponseDto.builder()
                 .gameId(gameId)
@@ -35,7 +35,8 @@ public class CardController {
     }
 
     @PostMapping("/return")
-    public ResponseEntity<GameResponseDto> returnCardToBottom(@PathVariable String gameId, @RequestBody Card card) {
+    public ResponseEntity<GameResponseDto> returnCardToBottom(@PathVariable Long gameId,
+            @RequestBody Card card) {
 
         gameService.returnCardToBottom(gameId, card);
         GameResponseDto response = GameResponseDto.builder()
@@ -49,7 +50,7 @@ public class CardController {
     }
 
     @PostMapping("/shuffle")
-    public ResponseEntity<GameResponseDto> shuffle(@PathVariable String gameId) {
+    public ResponseEntity<GameResponseDto> shuffle(@PathVariable Long gameId) {
         gameService.shuffle(gameId);
         GameResponseDto response = GameResponseDto.builder()
                 .gameId(gameId)

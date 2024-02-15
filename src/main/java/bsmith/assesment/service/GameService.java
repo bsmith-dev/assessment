@@ -1,54 +1,54 @@
 package bsmith.assesment.service;
 
-import bsmith.assesment.exception.GameException;
 import bsmith.assesment.entity.Card;
-import bsmith.assesment.entity.Deck;
-import java.util.HashMap;
-import java.util.Map;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import bsmith.assesment.entity.Game;
+import bsmith.assesment.exception.GameException;
+import bsmith.assesment.repository.CardRepository;
+import bsmith.assesment.repository.GameRepository;
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 @Service
 @Slf4j
-@Getter
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class GameService {
 
-    private Map<String, Deck> games = new HashMap<>();
+    private final GameRepository gameRepository;
+    private final CardRepository cardRepository;
 
-    public Card deal(String gameId) {
-        Deck deck = games.computeIfAbsent(gameId, k -> new Deck());
-        return deck.deal();
+    @Transactional
+    public Card deal(Long gameId) {
+        log.info("Deal game id: {}", gameId);
+        Game game = gameRepository.findById(gameId).orElseGet(() -> {
+            Game newGame = new Game();
+            newGame.setId(gameId);
+            gameRepository.save(newGame);
+            return newGame;
+        });
+        return game.deal();
     }
 
-    public void returnCardToBottom(String gameId, Card card) {
-        log.info("Game id: {}", gameId);
-        // games.get(gameId) != null && games.get(gameId) != null &&
-        if (games.get(gameId) == null) {
-            String MESSAGE = "Game has not been started yet. Please deal a card first.";
-            log.info(MESSAGE);
-            throw new GameException(MESSAGE);
-        }
-        if (games.get(gameId).getCards().contains(card)) {
-            String MESSAGE = "Card "+ card +" is already in deck";
-            log.info(MESSAGE);
-            throw new GameException(MESSAGE);
+    public void returnCardToBottom(Long gameId, Card card) {
+        log.info("Game id: {} Card: {}", gameId, card);
+        Game game = gameRepository.findById(gameId).orElseThrow(() -> new GameException(
+                "Game has not been started yet. Please deal a card first."));
+
+        if (game.getCards().contains(card)) {
+            throw new GameException("Card " + card + " is already in deck");
         }
 
-        Deck deck = games.get(gameId);
-        if (deck != null) {
-            deck.returnCardToBottom(card);
-        }
-
-
+        game.returnCardToBottom(card);
+        gameRepository.save(game);
     }
 
-    public void shuffle(String gameId) {
-        Deck deck = games.get(gameId);
-        if (deck != null) {
-            deck.shuffle();
-        }
+    public void shuffle(Long gameId) {
+        log.info("Shuffle game id: {}", gameId);
+        Game game = gameRepository.findById(gameId).orElseThrow(() -> new GameException(
+                "Game has not been started yet. Please deal a card first."));
+
+        game.shuffle();
+        gameRepository.save(game);
     }
 }
